@@ -4,16 +4,15 @@ import java.time.LocalDate;
 
 public class Evento {
 
-    private int id;
+    private Long id;
     private String titulo;
     private LocalDate data;
     private String hora;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

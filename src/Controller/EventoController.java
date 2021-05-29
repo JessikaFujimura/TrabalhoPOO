@@ -13,8 +13,7 @@ import java.util.List;
 
 public class EventoController {
 
-    private static int id = 0;
-    private LongProperty idProp = new SimpleLongProperty(0);
+    private static Long id = 0L;
     private StringProperty tituloProp = new SimpleStringProperty("");
     private ObjectProperty<LocalDate> dataProp = new SimpleObjectProperty<>();
     private StringProperty horaProp = new SimpleStringProperty("00:00");
@@ -27,7 +26,6 @@ public class EventoController {
 
     private void setEntity(Evento evento){
         if(evento != null){
-         idProp.set(evento.getId());
          tituloProp.set(evento.getTitulo());
          dataProp.set(evento.getData());
          horaProp.set(evento.getHora());
@@ -70,13 +68,6 @@ public class EventoController {
         }
     }
 
-    public long getIdProp() {
-        return idProp.get();
-    }
-
-    public LongProperty idPropProperty() {
-        return idProp;
-    }
 
     public String getTituloProp() {
         return tituloProp.get();
