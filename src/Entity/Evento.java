@@ -5,24 +5,23 @@ import java.time.LocalDate;
 public class Evento {
 
     private Long id;
-    private String Titulo;
+    private String titulo;
     private LocalDate data;
-    private String  hora;
+    private String hora;
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
 
     public String getTitulo() {
-        return Titulo;
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
-        Titulo = titulo;
+        this.titulo = titulo;
     }
 
     public LocalDate getData() {
@@ -46,7 +45,7 @@ public class Evento {
     public String toString() {
         return "Evento{" +
                 "id=" + id +
-                ", Titulo='" + Titulo + '\'' +
+                ", Titulo='" + titulo + '\'' +
                 ", data=" + data +
                 ", hora='" + hora + '\'' +
                 '}';
