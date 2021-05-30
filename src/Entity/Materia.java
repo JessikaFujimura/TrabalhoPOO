@@ -4,26 +4,16 @@ import java.util.List;
 
 public class Materia {
 
-    private int id;
-    private String codMateria;
+    private Long id;
     private String nome;
     private List<Aluno> alunos;
-    private int faltas;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCodMateria() {
-        return codMateria;
-    }
-
-    public void setCodMateria(String codMateria) {
-        this.codMateria = codMateria;
     }
 
     public String getNome() {
@@ -42,11 +32,5 @@ public class Materia {
         this.alunos = alunos;
     }
 
-    public int getFaltas() {
-        return faltas;
-    }
 
-    public void setFaltas(int faltas) {
-        this.faltas = faltas;
-    }
 }
