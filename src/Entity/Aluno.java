@@ -1,7 +1,5 @@
 package Entity;
 
-import java.util.List;
-
 public class Aluno {
 
     private Long idAluno;
