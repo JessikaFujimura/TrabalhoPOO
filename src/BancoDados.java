@@ -13,10 +13,6 @@ public class BancoDados {
             System.out.println("Driver carregado");
             Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Conectado no bd");
-            String insert = "INSERT INTO eventos (titulo,data,hora) VALUES ('Visita ao zoologico municipal', '2022-03-15', '09:00')";
-            PreparedStatement preparedStatement = con.prepareStatement(insert);
-            int linhasAfetadas = preparedStatement.executeUpdate();
-            System.out.println("Linhas afetadas ==> " + linhasAfetadas);
             con.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 
 public class EventoBoundary extends Application {
 
-    private TextField idEvento = new TextField();
     private TextField tituloEvento = new TextField();
     private DatePicker dataEvento = new DatePicker();
     private TextField horaEvento = new TextField("00:00");
@@ -47,6 +46,7 @@ public class EventoBoundary extends Application {
         criarEvento.setOnAction((event -> {
             eventoController.adicionar();
         }));
+
 
         Bindings.bindBidirectional(tituloEvento.textProperty(), eventoController.tituloPropProperty());
         Bindings.bindBidirectional(dataEvento.valueProperty(), eventoController.dataPropProperty());

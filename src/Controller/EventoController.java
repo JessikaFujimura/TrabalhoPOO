@@ -3,10 +3,7 @@ package Controller;
 import Entity.Evento;
 import javafx.beans.property.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,6 @@ public class EventoController {
 
     public void adicionar(){
         Evento evento = getEntity();
-        System.out.println(evento);
         eventos.add(evento);
         try {
             Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -61,6 +57,27 @@ public class EventoController {
     }
 
     public void pesquisar(){ //Esse método vai ser usado em outra boundary, na boundary da home.
+        try {
+            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+            String select = "SELECT * FROM eventos";
+            PreparedStatement preparedStatement = con.prepareStatement(select);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()){
+                Long id = result.getLong("ID");
+                String titulo = result.getString("TITULO");
+                LocalDate data = result.getDate("DATA").toLocalDate();
+                String hora = result.getString("HORA");
+                Evento evento = new Evento();
+                evento.setId(id);
+                evento.setTitulo(titulo);
+                evento.setData(data);
+                evento.setHora(hora);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         for(Evento ev: eventos) {
             if (ev.getTitulo().contains(getTituloProp())) {
                 setEntity(ev);

@@ -1,7 +1,6 @@
 package Controller;
 
 import Entity.Aluno;
-import Entity.Materia;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,73 +8,100 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
 
 public class MateriaController {
+
+    private static final String URL = "jdbc:mariadb://localhost:3306/TRABPOO";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
+
+    private static Long id = 0L;
+    private LongProperty codProp = new SimpleLongProperty();
+    private StringProperty nomeProp = new SimpleStringProperty();
+    private ObjectProperty<Aluno> notasProp = new SimpleObjectProperty<>();
+    private IntegerProperty faltaProp = new SimpleIntegerProperty();
 
     private ObservableList<Aluno> alunos = FXCollections.observableArrayList();
     private TableView<Aluno> table = new TableView<>();
 
-    private static Long id = 0L;
-    private StringProperty codProp = new SimpleStringProperty();
-    private StringProperty nomeProp = new SimpleStringProperty();
-    private ObjectProperty<Map<String,Integer>> notasProp = new SimpleObjectProperty<>();
-    private IntegerProperty faltaProp = new SimpleIntegerProperty();
-
-    private List<Materia> listaMaterias = new ArrayList<>();
-    private List<Aluno> listaAlunos = new ArrayList<>();
-
-    public void setEntity(Aluno aluno){
-        if(aluno != null){
-
-        }
-    }
-
 
     public void pesquisar(){
-        for (Materia m: listaMaterias){
-            if(m.getCodMateria().contains(getCodProp())){
-                listaAlunos = m.getAlunos();
+        try {
+            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+            String select = "SELECT * FROM ALUNOS WHERE IDALUNO = ANY (SELECT IDALUNO FROM ALUNOSMAT WHERE IDMATERIA=?)";
+            PreparedStatement preparedStatement = con.prepareStatement(select);
+            preparedStatement.setInt(1, (int) codProp.get());
+            ResultSet result = preparedStatement.executeQuery();
+
+            while (result.next()) {
+                Long id = result.getLong("IDALUNO");
+                String nome = result.getString("NOMEALUNO");
+                Double n1 = result.getDouble("N1");
+                Double n2 = result.getDouble("N2");
+                Double n3 = result.getDouble("N3");
+                Double n4 = result.getDouble("N4");
+                Integer faltas = result.getInt("FALTA");
+
+                Aluno aluno = new Aluno();
+                aluno.setIdAluno(id);
+                aluno.setNome(nome);
+                aluno.setN1(n1);
+                aluno.setN2(n2);
+                aluno.setN3(n3);
+                aluno.setN4(n4);
+                aluno.setFaltas(faltas);
+                alunos.add(aluno);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public void generatedTable(){
         TableColumn<Aluno, Long> colId = new TableColumn<>("Id");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colId.setCellValueFactory(new PropertyValueFactory<Aluno, Long>("idAluno"));
 
         TableColumn<Aluno, String> colNome = new TableColumn<>("Nome");
-        colNome.setCellValueFactory(new PropertyValueFactory<Aluno, String>("Nome"));
+        colNome.setCellValueFactory(new PropertyValueFactory<Aluno, String>("nome"));
 
-        TableColumn<Aluno, Integer> col1Bim = new TableColumn<>("1 Bimestre");
-        col1Bim.setCellValueFactory(new PropertyValueFactory<>("1 Bimestre"));
+        TableColumn<Aluno, Double> col1Bim = new TableColumn<>("1 Bimestre");
+        col1Bim.setCellValueFactory(new PropertyValueFactory<>("n1"));
 
-        TableColumn<Aluno, Integer> col2Bim = new TableColumn<>("2 Bimestre");
-        col2Bim.setCellValueFactory(new PropertyValueFactory<>("2 Bimestre"));
+        TableColumn<Aluno, Double> col2Bim = new TableColumn<>("2 Bimestre");
+        col2Bim.setCellValueFactory(new PropertyValueFactory<>("n1"));
 
-        TableColumn<Aluno, Integer> col3Bim = new TableColumn<>("3 Bimestre");
-        col3Bim.setCellValueFactory(new PropertyValueFactory<>("1 Bimestre"));
+        TableColumn<Aluno, Double> col3Bim = new TableColumn<>("3 Bimestre");
+        col3Bim.setCellValueFactory(new PropertyValueFactory<>("n3"));
 
-        TableColumn<Aluno, Integer> col4Bim = new TableColumn<>("4 Bimestre");
-        col4Bim.setCellValueFactory(new PropertyValueFactory<Aluno, Integer>("4 Bimestre"));
+        TableColumn<Aluno, Double> col4Bim = new TableColumn<>("4 Bimestre");
+        col4Bim.setCellValueFactory(new PropertyValueFactory<>("n4"));
 
-        table.getColumns().addAll(colId, colNome, col1Bim, col2Bim, col3Bim, col4Bim);
+        TableColumn<Aluno, Integer> faltas = new TableColumn<>("Faltas");
+        faltas.setCellValueFactory(new PropertyValueFactory<>("faltas"));
+
+        table.getColumns().addAll(colId, colNome, col1Bim, col2Bim, col3Bim, col4Bim, faltas);
 
         table.setItems(alunos);
     }
 
+    public TableView<Aluno> getTable() {
+        return table;
+    }
 
-    public String getCodProp() {
+    public long getCodProp() {
         return codProp.get();
     }
 
-    public StringProperty codPropProperty() {
+    public LongProperty codPropProperty() {
         return codProp;
     }
 
-    public void setCodProp(String codProp) {
+    public void setCodProp(long codProp) {
+        this.codProp.set(codProp);
+    }
+
+    public void setCodProp(int codProp) {
         this.codProp.set(codProp);
     }
 
@@ -91,18 +117,6 @@ public class MateriaController {
         this.nomeProp.set(nomeProp);
     }
 
-    public Map<String, Integer> getNotasProp() {
-        return notasProp.get();
-    }
-
-    public ObjectProperty<Map<String, Integer>> notasPropProperty() {
-        return notasProp;
-    }
-
-    public void setNotasProp(Map<String, Integer> notasProp) {
-        this.notasProp.set(notasProp);
-    }
-
     public int getFaltaProp() {
         return faltaProp.get();
     }
@@ -115,7 +129,5 @@ public class MateriaController {
         this.faltaProp.set(faltaProp);
     }
 
-    public TableView<Aluno> getTable() {
-        return table;
-    }
+
 }
