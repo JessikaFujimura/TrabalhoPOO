@@ -1,0 +1,12 @@
+.label {
+     -fx-text-fill: black;
+     -fx-font-size:15px;
+     -fx-font-family: "verdana";
+     -fx-font-weight: bold;
+}
+
+.button {
+     -fx-font-size:15px;
+     -fx-font-family: "verdana";
+     -fx-font-weight: bold;
+}
