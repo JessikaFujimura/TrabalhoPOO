@@ -1,5 +1,6 @@
 package Boundary;
 
+import Controller.LoginController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,16 +13,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class LoginController extends Application {
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginBoundary extends Application {
 
     private TextField user = new TextField();
     private PasswordField password = new PasswordField();
 
     private Button logar = new Button("Login");
+    private PatternStrategy materia = new MateriaBoundary();
 
+    private LoginController loginController = new LoginController();
 
     @Override
     public void start(Stage stage) throws Exception {
+        Map<String, String > d = new HashMap<String, String>();
+        d.put("user","123");
+        loginController.setCadastrados(d);
+
         GridPane grid = new GridPane();
 
         Scene sc = new Scene(grid, 1200, 600);
@@ -49,15 +59,12 @@ public class LoginController extends Application {
         grid.add(user,2 , 2);
         grid.add(senhalb, 1, 3);
         grid.add(password, 2, 3);
-        grid.add(logar, 1, 4, 2,1);
+        grid.add(logar, 1, 5, 2,1);
 
         logar.setOnAction(event -> {
-/*            EventoBoundary evento = new EventoBoundary();
-            stage.getScene().setRoot(evento.getEventBoundary());*/
-
-            MateriaBoundary materia = new MateriaBoundary();
-            stage.getScene().setRoot(materia.getMateriaBoundary());
-
+            if(loginController.validarUsuario(user.getText(), password.getText())){
+                stage.getScene().setRoot(materia.gerarTela());
+            }
         });
 
         grid.setAlignment(Pos.CENTER);
@@ -68,6 +75,6 @@ public class LoginController extends Application {
     }
 
     public static void main(String[] args) {
-        Application.launch(LoginController.class, args);
+        Application.launch(LoginBoundary.class, args);
     }
 }
