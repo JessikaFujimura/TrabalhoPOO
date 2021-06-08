@@ -24,12 +24,15 @@ public class LoginBoundary extends Application {
     private Button logar = new Button("Login");
     private PatternStrategy materia = new MateriaBoundary();
 
+    private PatternStrategy evento = new EventoBoundary();
+
     private LoginController loginController = new LoginController();
 
     @Override
     public void start(Stage stage) throws Exception {
         Map<String, String > d = new HashMap<String, String>();
         d.put("user","123");
+        d.put("admin","123");
         loginController.setCadastrados(d);
 
         GridPane grid = new GridPane();
@@ -64,6 +67,8 @@ public class LoginBoundary extends Application {
         logar.setOnAction(event -> {
             if(loginController.validarUsuario(user.getText(), password.getText())){
                 stage.getScene().setRoot(materia.gerarTela());
+            } else {
+                stage.getScene().setRoot(evento.gerarTelaAdmin());
             }
         });
 

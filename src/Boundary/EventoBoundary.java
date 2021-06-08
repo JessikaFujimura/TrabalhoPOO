@@ -24,7 +24,6 @@ public class EventoBoundary implements PatternStrategy{
 
     @Override
     public Pane gerarTelaAdmin() {
-
         GridPane eventBoundary = new GridPane();
         TextField tituloEvento = new TextField();
         DatePicker dataEvento = new DatePicker();
