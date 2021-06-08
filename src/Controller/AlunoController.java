@@ -18,7 +18,6 @@ import java.util.List;
 
 public class AlunoController {
 
-
     private static ObservableList<Aluno> alunos = FXCollections.observableArrayList();
     private static TableView<Aluno> table = new TableView<>();
 
