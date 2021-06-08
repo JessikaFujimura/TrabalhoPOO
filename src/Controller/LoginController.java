@@ -7,9 +7,17 @@ public class LoginController {
 
     private Map<String, String> cadastrados = new HashMap<String, String>();
 
-    public boolean validarUsuario(String usuario, String senha){
+    private boolean validarAcesso(String usuario, String senha){
         String s = cadastrados.get(usuario);
         if(s.equals(senha)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean validarUsuario(String usuario, String senha){
+        boolean acesso = validarAcesso(usuario, senha);
+        if (acesso && usuario.equals("admin")){
             return true;
         }
         return false;
