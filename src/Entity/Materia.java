@@ -32,5 +32,4 @@ public class Materia {
         this.alunos = alunos;
     }
 
-
 }

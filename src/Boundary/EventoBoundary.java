@@ -3,6 +3,7 @@ package Boundary;
 import Controller.EventoController;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.Stage;
 
 
 public class EventoBoundary implements PatternStrategy{
@@ -24,7 +26,9 @@ public class EventoBoundary implements PatternStrategy{
 
     @Override
     public Pane gerarTelaAdmin() {
+        Stage stage = new Stage();
         GridPane eventBoundary = new GridPane();
+        Scene scene = new Scene(eventBoundary, 300, 200);
         TextField tituloEvento = new TextField();
         DatePicker dataEvento = new DatePicker();
         TextField horaEvento = new TextField("00:00");
@@ -67,9 +71,12 @@ public class EventoBoundary implements PatternStrategy{
         Bindings.bindBidirectional(dataEvento.valueProperty(), eventoController.dataPropProperty());
         Bindings.bindBidirectional(horaEvento.textProperty(), eventoController.horaPropProperty());
 
-/*        cancelar.setOnAction(event -> {
+        cancelar.setOnAction(event -> {
             stage.close();
-        });*/
+        });
+
+        stage.setScene(scene);
+        stage.show();
 
         return eventBoundary;
     }
