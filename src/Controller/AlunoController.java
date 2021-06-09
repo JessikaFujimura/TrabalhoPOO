@@ -32,10 +32,10 @@ public class AlunoController {
     public static void generatedTable(){
 
         TableColumn<Aluno, Long> colId = new TableColumn<>("Id");
-        colId.setCellValueFactory(new PropertyValueFactory<Aluno, Long>("idAluno"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("idAluno"));
 
         TableColumn<Aluno, String> colNome = new TableColumn<>("Nome");
-        colNome.setCellValueFactory(new PropertyValueFactory<Aluno, String>("nome"));
+        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colNome.setMinWidth(100);
 
         TableColumn<Aluno, Double> col1Bim = new TableColumn<>("1 Bimestre");
@@ -79,8 +79,6 @@ public class AlunoController {
                                 Stage st = new Stage();
                                 GridPane grid  = new GridPane();
                                 Scene sc = new Scene(grid, 300, 100);
-
-
 
                                 st.setScene(sc);
                                 st.show();
