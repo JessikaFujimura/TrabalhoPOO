@@ -2,6 +2,7 @@ package Boundary;
 
 import Controller.LoginController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,10 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +29,9 @@ public class LoginBoundary extends Application {
 
     private PatternStrategy evento = new EventoBoundary();
 
+
+    private ComunicadosEventosAdmBoundary home2 = new ComunicadosEventosAdmBoundary();
+
     private LoginController loginController = new LoginController();
 
     @Override
@@ -37,7 +43,9 @@ public class LoginBoundary extends Application {
 
         GridPane grid = new GridPane();
 
-        Scene sc = new Scene(grid, 1200, 600);
+        Pane rootAdm = FXMLLoader.load(getClass().getClassLoader().getResource("ComunicadoAdm.fxml"));
+
+        Scene sc = new Scene(rootAdm, 1200, 600);
         sc.getStylesheets().add("./styles.css");
 
         grid.setMinSize(400,400);
@@ -68,7 +76,11 @@ public class LoginBoundary extends Application {
             if(loginController.validarUsuario(user.getText(), password.getText())){
                 stage.getScene().setRoot(materia.gerarTela());
             } else {
-                stage.getScene().setRoot(evento.gerarTelaAdmin());
+                /*try {
+                    home2.gerarTelaComunicadoAdmin();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
             }
         });
 
