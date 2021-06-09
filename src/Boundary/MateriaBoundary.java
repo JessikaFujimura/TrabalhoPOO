@@ -22,13 +22,35 @@ public class MateriaBoundary implements PatternStrategy {
     private AlunoController alunoController = new AlunoController();
 
     @Override
-    public Pane gerarTelaAdmin() {
+    public Pane gerarTela() {
+        GridPane grid = new GridPane();
 
-        return null;
+        grid.setPrefSize(800, 200);
+
+        Text textoPrincipal = new Text("NOTAS E FALTAS");
+        textoPrincipal.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        textoPrincipal.setTextAlignment(TextAlignment.CENTER);
+        textoPrincipal.setFill(Color.BLUEVIOLET);
+
+        grid.setHgap(30);
+        grid.setVgap(20);
+
+        grid.add(textoPrincipal, 1,1, 2, 1);
+
+
+        grid.setAlignment(Pos.TOP_LEFT);
+
+
+
+        alunoController.generatedTable();
+        materiaBoundary.setTop(grid);
+        materiaBoundary.setCenter(alunoController.getTable());
+
+        return materiaBoundary;
     }
 
     @Override
-    public Pane gerarTela() {
+    public Pane gerarTelaAdmin() {
         GridPane grid = new GridPane();
 
         grid.setPrefSize(800, 200);

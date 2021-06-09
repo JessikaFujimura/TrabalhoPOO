@@ -1,6 +1,8 @@
 package Controller;
 
 import Boundary.EventoBoundary;
+import Boundary.NotasEFaltasBoundary;
+import Boundary.PatternStrategy;
 import DAO.AlunoDAOImpl;
 import Entity.Aluno;
 import javafx.collections.FXCollections;
@@ -22,14 +24,15 @@ public class AlunoController {
 
     private AlunoDAOImpl alunoDAO = new AlunoDAOImpl();
 
-    private EventoBoundary evento = new EventoBoundary();
+    private NotasEFaltasBoundary notasEFaltas = new NotasEFaltasBoundary();
+
 
     public void buscarAlunosPorMateria(Integer idMateria){
        List<Aluno> lista = alunoDAO.pesquisar(idMateria);
        alunos.addAll(lista);
     }
 
-    public static void generatedTable(){
+    public void generatedTable(){
 
         TableColumn<Aluno, Long> colId = new TableColumn<>("Id");
         colId.setCellValueFactory(new PropertyValueFactory<>("idAluno"));
@@ -72,16 +75,14 @@ public class AlunoController {
                         } else {
                             FlowPane flow = new FlowPane();
                             Button btnEditar = new Button("editar");
-                            Button btnApagar = new Button("Apagar");
-                            flow.getChildren().addAll(btnEditar, btnApagar);
+                            flow.getChildren().addAll(btnEditar);
 
                             btnEditar.setOnAction(event -> {
-                                Stage st = new Stage();
-                                GridPane grid  = new GridPane();
-                                Scene sc = new Scene(grid, 300, 100);
+                                notasEFaltas.gerarTelaAdmin();
+                                table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                                    notasEFaltas.setNomeDoAluno(newValue.getNome());
+                                });
 
-                                st.setScene(sc);
-                                st.show();
                             });
                             setGraphic(flow);
                             setText(null);

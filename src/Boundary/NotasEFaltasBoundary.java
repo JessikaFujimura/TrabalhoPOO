@@ -3,16 +3,20 @@ package Boundary;
 import Controller.NotasEFaltasController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.*;
+import javafx.stage.Stage;
 
 public class NotasEFaltasBoundary implements PatternStrategy {
 
     private NotasEFaltasController notasEFaltasController = new NotasEFaltasController();
+    private Label Disciplina = new Label("");
+    private Label NomeDoAluno = new Label("");
 
     @Override
     public Pane gerarTela() {
@@ -21,16 +25,19 @@ public class NotasEFaltasBoundary implements PatternStrategy {
 
     @Override
     public Pane gerarTelaAdmin() {
+        Stage stage = new Stage();
+        GridPane notasFaltasBoundary = new GridPane();
 
-        GridPane NotasFaltasBoundary = new GridPane();
-        NotasFaltasBoundary.setHgap(30);
-        NotasFaltasBoundary.setVgap(20);
+        Scene scene = new Scene(notasFaltasBoundary, 500, 500);
+
+        notasFaltasBoundary.setHgap(30);
+        notasFaltasBoundary.setVgap(20);
         Label TituloNotasFaltas = new Label("NOTAS E FALTAS");
         TituloNotasFaltas.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
         TituloNotasFaltas.setTextAlignment(TextAlignment.CENTER);
-        Label Disciplina = new Label("PORTUGUÊS");
+
         Label TituloNomeDoAluno = new Label("NOME DO ALUNO");
-        Label NomeDoAluno = new Label("JOAO SILVA");
+
         Label TituloSerie = new Label("SÉRIE");
         Label Serie = new Label("3º");
         Label Turma = new Label("Turma");
@@ -58,25 +65,25 @@ public class NotasEFaltasBoundary implements PatternStrategy {
         Button Cancelar = new Button("Cancelar");
         Button Salvar = new Button("Salvar");
 
-        NotasFaltasBoundary.add(TituloNotasFaltas,1,1);
-        NotasFaltasBoundary.add(Disciplina,2,1);
-        NotasFaltasBoundary.add(TituloNomeDoAluno,1,2);
-        NotasFaltasBoundary.add(NomeDoAluno,2,2);
-        NotasFaltasBoundary.add(TituloSerie,1,3);
-        NotasFaltasBoundary.add(Serie,2,3);
-        NotasFaltasBoundary.add(Turma,3,3);
-        NotasFaltasBoundary.add(Bimestre1,1,7);
-        NotasFaltasBoundary.add(Bimestre1Field,2,7);
-        NotasFaltasBoundary.add(Bimestre2, 1,8);
-        NotasFaltasBoundary.add(Bimestre2Field,2,8);
-        NotasFaltasBoundary.add(Bimestre3,1,10);
-        NotasFaltasBoundary.add(Bimestre3Field, 2,10);
-        NotasFaltasBoundary.add(Bimestre4, 1,11);
-        NotasFaltasBoundary.add(Bimestre4Field,2,11);
-        NotasFaltasBoundary.add(Faltas,1,12);
-        NotasFaltasBoundary.add(faltasField,2,12);
-        NotasFaltasBoundary.add(Cancelar, 1,14);
-        NotasFaltasBoundary.add(Salvar,5,14);
+        notasFaltasBoundary.add(TituloNotasFaltas,1,1);
+        notasFaltasBoundary.add(Disciplina,2,1);
+        notasFaltasBoundary.add(TituloNomeDoAluno,1,2);
+        notasFaltasBoundary.add(NomeDoAluno,2,2);
+        notasFaltasBoundary.add(TituloSerie,1,3);
+        notasFaltasBoundary.add(Serie,2,3);
+        notasFaltasBoundary.add(Turma,3,3);
+        notasFaltasBoundary.add(Bimestre1,1,7);
+        notasFaltasBoundary.add(Bimestre1Field,2,7);
+        notasFaltasBoundary.add(Bimestre2, 1,8);
+        notasFaltasBoundary.add(Bimestre2Field,2,8);
+        notasFaltasBoundary.add(Bimestre3,1,10);
+        notasFaltasBoundary.add(Bimestre3Field, 2,10);
+        notasFaltasBoundary.add(Bimestre4, 1,11);
+        notasFaltasBoundary.add(Bimestre4Field,2,11);
+        notasFaltasBoundary.add(Faltas,1,12);
+        notasFaltasBoundary.add(faltasField,2,12);
+        notasFaltasBoundary.add(Cancelar, 1,14);
+        notasFaltasBoundary.add(Salvar,5,14);
 
         Salvar.setOnAction((event -> {
             notasEFaltasController.Salvar();
@@ -89,11 +96,20 @@ public class NotasEFaltasBoundary implements PatternStrategy {
         Bindings.bindBidirectional(Faltas.textProperty(), notasEFaltasController.faltasProperty());*/
 
         Cancelar.setOnAction((event -> {
-
+            stage.close();
         }));
+        stage.setScene(scene);
+        stage.show();
 
-        return NotasFaltasBoundary;
+        return notasFaltasBoundary;
     }
 
 
+    public void setDisciplina(Label disciplina) {
+        Disciplina = disciplina;
+    }
+
+    public void setNomeDoAluno(String nomeDoAluno) {
+        NomeDoAluno.setText(nomeDoAluno);
+    }
 }
