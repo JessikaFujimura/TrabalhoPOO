@@ -1,20 +1,19 @@
 package Controller;
 
+import Boundary.EventoBoundary;
 import DAO.AlunoDAOImpl;
 import Entity.Aluno;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.List;
-
 
 public class AlunoController {
 
@@ -22,6 +21,8 @@ public class AlunoController {
     private static TableView<Aluno> table = new TableView<>();
 
     private AlunoDAOImpl alunoDAO = new AlunoDAOImpl();
+
+    private EventoBoundary evento = new EventoBoundary();
 
     public void buscarAlunosPorMateria(Integer idMateria){
        List<Aluno> lista = alunoDAO.pesquisar(idMateria);
@@ -31,10 +32,10 @@ public class AlunoController {
     public static void generatedTable(){
 
         TableColumn<Aluno, Long> colId = new TableColumn<>("Id");
-        colId.setCellValueFactory(new PropertyValueFactory<Aluno, Long>("idAluno"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("idAluno"));
 
         TableColumn<Aluno, String> colNome = new TableColumn<>("Nome");
-        colNome.setCellValueFactory(new PropertyValueFactory<Aluno, String>("nome"));
+        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colNome.setMinWidth(100);
 
         TableColumn<Aluno, Double> col1Bim = new TableColumn<>("1 Bimestre");
@@ -75,7 +76,12 @@ public class AlunoController {
                             flow.getChildren().addAll(btnEditar, btnApagar);
 
                             btnEditar.setOnAction(event -> {
-                                System.out.println("Editar");
+                                Stage st = new Stage();
+                                GridPane grid  = new GridPane();
+                                Scene sc = new Scene(grid, 300, 100);
+
+                                st.setScene(sc);
+                                st.show();
                             });
                             setGraphic(flow);
                             setText(null);
