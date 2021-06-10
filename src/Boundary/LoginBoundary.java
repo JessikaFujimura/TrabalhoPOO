@@ -1,6 +1,7 @@
 package Boundary;
 
 import Controller.LoginController;
+import Entity.Comunicado;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,8 +27,6 @@ public class LoginBoundary extends Application {
 
     private Button logar = new Button("Login");
     private PatternStrategy materia = new MateriaBoundary();
-
-    private PatternStrategy evento = new EventoBoundary();
 
     private LoginController loginController = new LoginController();
 
@@ -70,19 +69,10 @@ public class LoginBoundary extends Application {
         FlowPane fp = new FlowPane();
 
         MenuBar menu = new MenuBar();
-        Menu notas = new Menu("Notas");
-        MenuItem lancarNotas = new MenuItem("Lançar notas e faltas");
+        Menu notas = new Menu("Menu");
+        MenuItem lancarNotas = new MenuItem("notas e faltas");
         menu.getMenus().addAll(notas);
         notas.getItems().addAll(lancarNotas);
-
-
-        lancarNotas.setOnAction(event -> {
-            try {
-                stage.getScene().setRoot(materia.gerarTelaAdmin());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
 
         fp.getChildren().addAll(menu);
 
@@ -91,22 +81,30 @@ public class LoginBoundary extends Application {
 
         logar.setOnAction(event -> {
             if(loginController.validarUsuario(user.getText(), password.getText())){
-                FXMLLoader rootAdm = new FXMLLoader(getClass().getResource("ComunicadoAdm.fxml"));
+                FXMLLoader rootAdm = new FXMLLoader(getClass().getResource("HomeAdm.fxml"));
                 rootAdm.setController(new LoginBoundary());
                 try {
                     Pane pane = rootAdm.load();
                     bp.setCenter(pane);
                     stage.getScene().setRoot(bp);
+                    lancarNotas.setOnAction(ev -> {
+                        stage.getScene().setRoot(materia.gerarTelaAdmin());
+                    });
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             } else {
-                FXMLLoader rootAdm = new FXMLLoader(getClass().getResource("ComunicadoUser.fxml"));
-                rootAdm.setController(new LoginBoundary());
+                FXMLLoader rootUser = new FXMLLoader(getClass().getResource("HomeUser.fxml"));
+                rootUser.setController(new LoginBoundary());
                 try {
-                    Pane pane = rootAdm.load();
-                    stage.getScene().setRoot(pane);
+                    Pane pane = rootUser.load();
+                    bp.setCenter(pane);
+                    stage.getScene().setRoot(bp);
+                    lancarNotas.setOnAction(ev -> {
+                        stage.getScene().setRoot(materia.gerarTela());
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -121,9 +119,15 @@ public class LoginBoundary extends Application {
     }
 
     @FXML
-    private void abrirModal(){
+    private void abrirModalEventos(){
         EventoBoundary ev = new EventoBoundary();
         ev.gerarTelaAdmin();
+    }
+
+    @FXML
+    private void abrirModalComunicado(){
+        ComunicadoBoundary com = new ComunicadoBoundary();
+        com.gerarTelaAdmin();
     }
 
     public static void main(String[] args) {

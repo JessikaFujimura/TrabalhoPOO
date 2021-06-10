@@ -30,6 +30,7 @@ public class AlunoDAOImpl implements AlunoDAO {
             while (result.next()) {
                 Long id = result.getLong("IDALUNO");
                 String nome = result.getString("NOMEALUNO");
+                String serie = result.getString("SERIE");
                 Double n1 = result.getDouble("N1");
                 Double n2 = result.getDouble("N2");
                 Double n3 = result.getDouble("N3");
@@ -39,6 +40,7 @@ public class AlunoDAOImpl implements AlunoDAO {
                 Aluno aluno = new Aluno();
                 aluno.setIdAluno(id);
                 aluno.setNome(nome);
+                aluno.setSerie(serie);
                 aluno.setN1(n1);
                 aluno.setN2(n2);
                 aluno.setN3(n3);
@@ -59,6 +61,20 @@ public class AlunoDAOImpl implements AlunoDAO {
 
     @Override
     public void atualizar(Long id, Aluno aluno) {
-
+        try {
+            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+            String insert = "UPDATE alunos SET nomealuno=?, serie=?, n1=?, n2=?, n3=?, n4=?, falta=? ";
+            PreparedStatement preparedStatement = con.prepareStatement(insert);
+            preparedStatement.setString(1, aluno.getNome());
+            preparedStatement.setString(2, aluno.getSerie());
+            preparedStatement.setDouble(3, aluno.getN1());
+            preparedStatement.setDouble(4, aluno.getN2());
+            preparedStatement.setDouble(5, aluno.getN3());
+            preparedStatement.setDouble(6, aluno.getN4());
+            preparedStatement.setInt(7, aluno.getFaltas());
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

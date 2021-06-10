@@ -9,26 +9,19 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 
-public class EventoBoundary implements PatternStrategy{
+public class EventoBoundary {
 
     private EventoController eventoController = new EventoController();
 
-    @Override
-    public Pane gerarTela() {
-        return null;
-    }
-
-    @Override
-    public Pane gerarTelaAdmin() {
+    public void gerarTelaAdmin() {
         Stage stage = new Stage();
         GridPane eventBoundary = new GridPane();
-        Scene scene = new Scene(eventBoundary, 300, 200);
+        Scene scene = new Scene(eventBoundary, 500, 400);
         TextField tituloEvento = new TextField();
         DatePicker dataEvento = new DatePicker();
         TextField horaEvento = new TextField("00:00");
@@ -78,6 +71,5 @@ public class EventoBoundary implements PatternStrategy{
         stage.setScene(scene);
         stage.show();
 
-        return eventBoundary;
     }
 }

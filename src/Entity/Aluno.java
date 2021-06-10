@@ -8,17 +8,9 @@ public class Aluno {
     private Double n2;
     private Double n3;
     private Double n4;
-    private String turma;
     private String serie;
     private int faltas;
 
-    public String getTurma() {
-        return turma;
-    }
-
-    public void setTurma(String turma) {
-        this.turma = turma;
-    }
 
     public String getSerie() {
         return serie;

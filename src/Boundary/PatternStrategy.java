@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public interface PatternStrategy {
 
-    Pane gerarTelaAdmin() throws IOException;
+    Pane gerarTelaAdmin();
     Pane gerarTela();
 }

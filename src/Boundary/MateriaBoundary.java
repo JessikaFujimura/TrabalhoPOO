@@ -4,11 +4,10 @@ import Controller.AlunoController;
 import Controller.MateriaController;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -37,10 +36,7 @@ public class MateriaBoundary implements PatternStrategy {
 
         grid.add(textoPrincipal, 1,1, 2, 1);
 
-
         grid.setAlignment(Pos.TOP_LEFT);
-
-
 
         alunoController.generatedTable();
         materiaBoundary.setTop(grid);
@@ -72,6 +68,18 @@ public class MateriaBoundary implements PatternStrategy {
         grid.add(buscarMateria, 3, 3);
 
         grid.setAlignment(Pos.TOP_LEFT);
+
+        FlowPane fp = new FlowPane();
+
+        MenuBar menu = new MenuBar();
+        Menu m = new Menu("Menu");
+        MenuItem home = new MenuItem("Home");
+        menu.getMenus().addAll(m);
+        m.getItems().addAll(home);
+
+        fp.getChildren().addAll(menu);
+
+        materiaBoundary.setTop(fp);
 
         buscarMateria.setOnAction((event -> {
             alunoController.getTable().getItems().clear();
